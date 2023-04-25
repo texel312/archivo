@@ -1052,7 +1052,7 @@ class MyForm(QDialog):
            if version[0] != versionnueva[0]:
                self.ui.label_20.setGeometry(QtCore.QRect(450, 385, 636, 56))
                self.ui.label_20.setText(f'<font color="white">version disponible para actualizar:  V{versionnueva[0]} <font>')
-
+               self.ui.version.setText(f'<font color="white">version actual: V{version[0]} <font>')
                self.ui.pushButtonvolver_update.setGeometry(QtCore.QRect(370, 475, 220, 56))
                self.ui.pushButtonactualizar_confirmar.setEnabled(True)
                #self.ui.pushButtonactualizar_confirmar.raise_()
@@ -1062,14 +1062,16 @@ class MyForm(QDialog):
            else:
              self.ui.label_20.setGeometry(QtCore.QRect(350, 385, 636, 56))
              self.ui.label_20.setText(f'<font color="white">el software se encuentra actualizado a la versión más reciente. <font>')
-             self.ui.version.setText(f'<font color="white">{version} <font>')
+
              self.ui.pushButtonactualizar_confirmar.setEnabled(False)
+             self.ui.version.setText(f'<font color="white">version actual: V{version[0]} <font>')
              #self.ui.pushButtonvolver_update.setGeometry(QtCore.QRect(500, 475, 220, 56))
              #self.ui.pushButtonactualizar_confirmar.hide()
        except:
            self.ui.label_20.setGeometry(QtCore.QRect(425, 385, 636, 56))
            self.ui.label_20.setText(f'<font color="white">no se han encontrado versiones para actualizar. <font>')
            self.ui.pushButtonactualizar_confirmar.setEnabled(False)
+           self.ui.version.setText(f'<font color="white">version actual: V{version[0]} <font>')
 
 
 
