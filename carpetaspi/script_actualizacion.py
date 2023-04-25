@@ -56,6 +56,8 @@ class miwidget(QDialog):
      c.execute("UPDATE codigo SET version= ?", (versionnueva[0],))
      conn.commit()
      conn.close()
+
+     os.system("sudo mogrify *.png")
      #os.system("reboot")
     except:
       os.system("sudo cp -R /home/texel/backup/* /home/texel/")
