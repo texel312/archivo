@@ -1028,9 +1028,6 @@ class MyForm(QDialog):
        self.bloqueodepaginas(self.numpagina)
 
        try:
-
-
-
            connection = sql.connect('versionactual.db')
            cur = connection.cursor()
            instruccion = 'SELECT version FROM codigo'

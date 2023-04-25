@@ -1,5 +1,5 @@
-import git
-import shutil
+#import git
+#import shutil
 import sys
 from PyQt5.QtWidgets import QDialog, QApplication
 from PyQt5.QtCore import QTimer, QTime, Qt
@@ -23,12 +23,21 @@ class miwidget(QDialog):
     self.ui.label.setText("<span style=\" font-size:20pt; color:#f1f1f1;\">pulse actualizar para comenzar el proceso.<span>")
     self.ui.pushButton.pressed.connect(self.cartelactualizar)
     self.ui.pushButton.released.connect(self.descargar_de_gihub)
+    self.ui.pushButton.released.connect(self.desactivarpulsador)
+    #self.ui.pushButtoncancelar.released.connect(self.reiniciar)
     self.estadoactualizacion=""
+    #self.ui.pushButtoncancelar.hide()
     #self.show()
 
  def cartelactualizar(self):
      self.ui.label.setText("<span style=\" font-size:20pt; font-weight:600; color:green;\">Actualizando.. <span><span style=\" font-size:20pt; color:#f1f1f1;\">aguarde un instante por favor. Una vez finalizado el proceso, el sistema se reiniciará.<span> <span style=\" font-size:20pt; font-weight:600; color:red;\">NO APAGUE EL EQUIPO <span>")
 
+ def reiniciar(self):
+     os.system("reboot")
+
+
+ def desactivarpulsador(self):
+     self.ui.pushButton.setEnabled(False)
 
  def descargar_de_gihub(self):
     try:
@@ -60,11 +69,15 @@ class miwidget(QDialog):
      os.system("sudo mogrify *.png")
      #os.system("reboot")
     except:
+      #self.ui.pushButtoncancelar.raise_()
+      #self.ui.pushButtoncancelar.show()
       os.system("sudo cp -R /home/texel/backup/* /home/texel/")
       os.system("sudo chmod -R 777 /home/texel")
       os.system("reboot")
     finally:
+      os.system("sudo chmod -R 777 /home/texel")
       os.system("reboot")
+
 
 
 
