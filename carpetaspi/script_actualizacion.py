@@ -52,19 +52,7 @@ class miwidget(QDialog):
      shutil.rmtree("/home/texel/qdial2")
      os.system("sudo chmod -R 777 /home/texel")
 
-     connection = sql.connect('versionnueva.db')
-     cur = connection.cursor()
-     instruccion = 'SELECT version FROM codigonuevo'
-     cur.execute(instruccion)
-     versionnueva = cur.fetchone()
-     connection.commit()
-     connection.close()
 
-     conn = sql.connect('versionactual.db')
-     c = conn.cursor()
-     c.execute("UPDATE codigo SET version= ?", (versionnueva[0],))
-     conn.commit()
-     conn.close()
 
      os.system("sudo mogrify *.png")
      #os.system("reboot")
@@ -75,8 +63,21 @@ class miwidget(QDialog):
       os.system("sudo chmod -R 777 /home/texel")
       os.system("reboot")
     finally:
-      os.system("sudo chmod -R 777 /home/texel")
-      os.system("reboot")
+        connection = sql.connect('versionnueva.db')
+        cur = connection.cursor()
+        instruccion = 'SELECT version FROM codigonuevo'
+        cur.execute(instruccion)
+        versionnueva = cur.fetchone()
+        connection.commit()
+        connection.close()
+
+        conn = sql.connect('versionactual.db')
+        c = conn.cursor()
+        c.execute("UPDATE codigo SET version= ?", (versionnueva[0],))
+        conn.commit()
+        conn.close()
+        os.system("sudo chmod -R 777 /home/texel")
+        os.system("reboot")
 
 
 
