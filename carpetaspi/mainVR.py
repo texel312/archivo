@@ -3,13 +3,13 @@ from wifi import Cell
 from script_actualizacion import miwidget
 #import board
 #import digitalio
-from pyqtgraph import PlotWidget, plot
-import pyqtgraph as pg
+#from pyqtgraph import PlotWidget, plot
+#import pyqtgraph as pg
 import sqlite3 as sql
 import webbrowser
 import socket
 import subprocess
-#import RPi.GPIO as gpio
+import RPi.GPIO as gpio
 #import urllib.request
 import pickle
 import os
@@ -27,7 +27,7 @@ import time
 
 
 puertoserie = serial.Serial(
- port="COM3",
+ port="/dev/ttyS0",
     #"devttyS0"
 #"devttyUSB0"
     #devttyS0
@@ -65,13 +65,13 @@ class MyForm(QDialog):
        super().__init__()
        self.setWindowFlags(Qt.FramelessWindowHint)
        self.setMouseTracking(True)
-       #self.setCursor(Qt.BlankCursor)
+       self.setCursor(Qt.BlankCursor)
        self.ui = Ui_Dialog()
        self.ui.setupUi(self)
        self.mostrarredesinicio()
-       #gpio.setwarnings(False)
-       #gpio.setmode(gpio.BCM)
-       #gpio.setup(17, gpio.OUT)
+       gpio.setwarnings(False)
+       gpio.setmode(gpio.BCM)
+       gpio.setup(17, gpio.OUT)
        #self.mostrarredeswifi()
        #self.buzzer2()
        #self.x = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
@@ -943,41 +943,41 @@ class MyForm(QDialog):
 
    def buzzer(self):
        #print("beep")
-       #gpio.output(17,True)
+       gpio.output(17,True)
        #self.buzzers.value = True
        sleep(0.1)
-       #gpio.output(17,False)
+       gpio.output(17,False)
        #self.buzzers.value = False
        #self.buzzers.value = False
 
    def buzzer2(self):
        #print("beep beep")
-       #gpio.output(17,True)
+       gpio.output(17,True)
        #self.buzzers.value = True
-       #sleep(0.3)
-       #gpio.output(17,False)
+       sleep(0.3)
+       gpio.output(17,False)
        sleep(0.1)
-       #gpio.output(17,True)
+       gpio.output(17,True)
        #self.buzzers.value = True
-       #sleep(0.3)
-       #gpio.output(17,False)
+       sleep(0.3)
+       gpio.output(17,False)
        #self.buzzers.value = False
        #self.buzzers.value = False
 
 
    def buzzer3(self):
        #print("beep beep beep")
-       #gpio.output(17,True)
+       gpio.output(17,True)
        sleep(0.35)
-       #gpio.output(17,False)
-       #sleep(0.1)
-       #gpio.output(17,True)
-       #sleep(0.35)
-       #gpio.output(17,False)
-       #sleep(0.1)
-       #gpio.output(17,True)
-       #sleep(0.35)
-       #gpio.output(17,False)
+       gpio.output(17,False)
+       sleep(0.1)
+       gpio.output(17,True)
+       sleep(0.35)
+       gpio.output(17,False)
+       sleep(0.1)
+       gpio.output(17,True)
+       sleep(0.35)
+       gpio.output(17,False)
 
 
 
@@ -1029,16 +1029,7 @@ class MyForm(QDialog):
 
        try:
 
-           # Clonar el repositorio de GitHub
-           repo = git.Repo.clone_from("https://github.com/texel312/archivo.git", "/home/texel/temporal")
-           # Copiar la carpeta del repositorio clonado en la Raspberry Pi a /home/mi_carpeta
-           shutil.copytree("/home/texel/temporal/nuevaversion", "/home/texel/qdial2")
 
-           # Eliminar el repositorio clonado
-           shutil.rmtree("/home/texel/temporal")
-           os.system("sudo cp -R /home/texel/qdial2/* /home/texel/")
-           shutil.rmtree("/home/texel/qdial2")
-           os.system("sudo chmod -R 777 /home/texel")
 
            connection = sql.connect('versionactual.db')
            cur = connection.cursor()

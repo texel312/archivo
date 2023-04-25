@@ -1,5 +1,5 @@
-#import git
-#import shutil
+import git
+import shutil
 import sys
 from PyQt5.QtWidgets import QDialog, QApplication
 from PyQt5.QtCore import QTimer, QTime, Qt
