@@ -86,7 +86,7 @@ class MyForm(QDialog):
        #self.data_line = self.ui.PlotWidget.plot(self.x, self.y, pen=pen)
        self.ui.selecciondetratrapidobloqueo.hide()
        #self.ui.temperatura.hide()
-       self.ui.version.setText(f'<font color="white">V1.5.3 <font>')
+
        self.ui.version.setFont(QtGui.QFont('Myriad Pro Cond', 22))
        self.ui.tableWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
        self.ui.texto_iniciorapidoencabezado_2.hide()
@@ -1062,6 +1062,7 @@ class MyForm(QDialog):
            else:
              self.ui.label_20.setGeometry(QtCore.QRect(350, 385, 636, 56))
              self.ui.label_20.setText(f'<font color="white">el software se encuentra actualizado a la versión más reciente. <font>')
+             self.ui.version.setText(f'<font color="white">{version} <font>')
              self.ui.pushButtonactualizar_confirmar.setEnabled(False)
              #self.ui.pushButtonvolver_update.setGeometry(QtCore.QRect(500, 475, 220, 56))
              #self.ui.pushButtonactualizar_confirmar.hide()
