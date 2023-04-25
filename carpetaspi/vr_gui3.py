@@ -3985,7 +3985,7 @@ class Ui_Dialog(object):
         self.pushButtonvolver16.setText("")
         self.pushButtonvolver16.setObjectName("pushButtonvolver16")
         self.version = QtWidgets.QLabel(self.actualizacion)
-        self.version.setGeometry(QtCore.QRect(600, 300, 221, 31))
+        self.version.setGeometry(QtCore.QRect(520, 300, 221, 31))
         font = QtGui.QFont()
         font.setFamily("Myriad Pro Cond")
         font.setPointSize(12)
