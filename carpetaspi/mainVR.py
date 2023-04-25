@@ -3,13 +3,13 @@ from wifi import Cell
 from script_actualizacion import miwidget
 #import board
 #import digitalio
-#from pyqtgraph import PlotWidget, plot
-#import pyqtgraph as pg
+from pyqtgraph import PlotWidget, plot
+import pyqtgraph as pg
 import sqlite3 as sql
 import webbrowser
 import socket
 import subprocess
-import RPi.GPIO as gpio
+#import RPi.GPIO as gpio
 #import urllib.request
 import pickle
 import os
@@ -27,7 +27,7 @@ import time
 
 
 puertoserie = serial.Serial(
- port="/dev/ttyS0",
+ port="COM3",
     #"devttyS0"
 #"devttyUSB0"
     #devttyS0
@@ -65,13 +65,13 @@ class MyForm(QDialog):
        super().__init__()
        self.setWindowFlags(Qt.FramelessWindowHint)
        self.setMouseTracking(True)
-       self.setCursor(Qt.BlankCursor)
+       #self.setCursor(Qt.BlankCursor)
        self.ui = Ui_Dialog()
        self.ui.setupUi(self)
        self.mostrarredesinicio()
-       gpio.setwarnings(False)
-       gpio.setmode(gpio.BCM)
-       gpio.setup(17, gpio.OUT)
+       #gpio.setwarnings(False)
+       #gpio.setmode(gpio.BCM)
+       #gpio.setup(17, gpio.OUT)
        #self.mostrarredeswifi()
        #self.buzzer2()
        #self.x = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
@@ -86,7 +86,8 @@ class MyForm(QDialog):
        #self.data_line = self.ui.PlotWidget.plot(self.x, self.y, pen=pen)
        self.ui.selecciondetratrapidobloqueo.hide()
        #self.ui.temperatura.hide()
-       self.versionactual = "1_6"
+       self.ui.version.setText(f'<font color="white">V1.5.3 <font>')
+       self.ui.version.setFont(QtGui.QFont('Myriad Pro Cond', 22))
        self.ui.tableWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
        self.ui.texto_iniciorapidoencabezado_2.hide()
        self.sehabilitoperfil=0
@@ -855,10 +856,13 @@ class MyForm(QDialog):
        self.ui.pushButtonwifi.pressed.connect(self.instanciawifi)
        self.ui.pushButtonupdate.released.connect(self.verificarversion)
        self.ui.pushButtonupdate.pressed.connect(lambda: self.instancia_pulsadores(self.ui.pushButtonupdate))
+       self.ui.pushButtonvolver_update.clicked.connect(self.buzzer)
        self.ui.pushButtonvolver_update.clicked.connect(lambda: self.animarpulsadorestransicion(self.ui.pushButtonvolver_update,370, 475,362,467, 220, 56,5))
+       self.ui.pushButtonlimpiar.clicked.connect(self.buzzer)
        self.ui.pushButtonlimpiar.pressed.connect(lambda: self.instancia_pulsadores(self.ui.pushButtonlimpiar))
        self.ui.pushButtonlimpiar.released.connect(self.pantallaborrarhistorial)
        self.ui.pushButtonactualizar_confirmar.clicked.connect(self.actualizarsoft)
+       self.ui.pushButtonconfirmarpass.clicked.connect(self.buzzer)
        self.ui.pushButtonconfirmarpass.pressed.connect(self.confirmarpassnumerico)
        self.ui.pushButtonconfirmarpass.released.connect(self.cambiarfondopass)
        self.timercab = QtCore.QTimer(self)
@@ -939,41 +943,41 @@ class MyForm(QDialog):
 
    def buzzer(self):
        #print("beep")
-       gpio.output(17,True)
+       #gpio.output(17,True)
        #self.buzzers.value = True
        sleep(0.1)
-       gpio.output(17,False)
+       #gpio.output(17,False)
        #self.buzzers.value = False
        #self.buzzers.value = False
 
    def buzzer2(self):
        #print("beep beep")
-       gpio.output(17,True)
+       #gpio.output(17,True)
        #self.buzzers.value = True
-       sleep(0.3)
-       gpio.output(17,False)
+       #sleep(0.3)
+       #gpio.output(17,False)
        sleep(0.1)
-       gpio.output(17,True)
+       #gpio.output(17,True)
        #self.buzzers.value = True
-       sleep(0.3)
-       gpio.output(17,False)
+       #sleep(0.3)
+       #gpio.output(17,False)
        #self.buzzers.value = False
        #self.buzzers.value = False
 
 
    def buzzer3(self):
        #print("beep beep beep")
-       gpio.output(17,True)
+       #gpio.output(17,True)
        sleep(0.35)
-       gpio.output(17,False)
-       sleep(0.1)
-       gpio.output(17,True)
-       sleep(0.35)
-       gpio.output(17,False)
-       sleep(0.1)
-       gpio.output(17,True)
-       sleep(0.35)
-       gpio.output(17,False)
+       #gpio.output(17,False)
+       #sleep(0.1)
+       #gpio.output(17,True)
+       #sleep(0.35)
+       #gpio.output(17,False)
+       #sleep(0.1)
+       #gpio.output(17,True)
+       #sleep(0.35)
+       #gpio.output(17,False)
 
 
 
@@ -1024,6 +1028,18 @@ class MyForm(QDialog):
        self.bloqueodepaginas(self.numpagina)
 
        try:
+
+           # Clonar el repositorio de GitHub
+           repo = git.Repo.clone_from("https://github.com/texel312/archivo.git", "/home/texel/temporal")
+           # Copiar la carpeta del repositorio clonado en la Raspberry Pi a /home/mi_carpeta
+           shutil.copytree("/home/texel/temporal/nuevaversion", "/home/texel/qdial2")
+
+           # Eliminar el repositorio clonado
+           shutil.rmtree("/home/texel/temporal")
+           os.system("sudo cp -R /home/texel/qdial2/* /home/texel/")
+           shutil.rmtree("/home/texel/qdial2")
+           os.system("sudo chmod -R 777 /home/texel")
+
            connection = sql.connect('versionactual.db')
            cur = connection.cursor()
            instruccion = 'SELECT version FROM codigo'
@@ -1052,15 +1068,16 @@ class MyForm(QDialog):
                #self.ui.pushButtonactualizar_confirmar.show()
 
 
-
            else:
              self.ui.label_20.setGeometry(QtCore.QRect(350, 385, 636, 56))
-             self.ui.label_20.setText("el software se encuentra actualizado a la versión más reciente.")
+             self.ui.label_20.setText(f'<font color="white">el software se encuentra actualizado a la versión más reciente. <font>')
              self.ui.pushButtonactualizar_confirmar.setEnabled(False)
              #self.ui.pushButtonvolver_update.setGeometry(QtCore.QRect(500, 475, 220, 56))
              #self.ui.pushButtonactualizar_confirmar.hide()
        except:
-           self.auxiliar10=0
+           self.ui.label_20.setGeometry(QtCore.QRect(425, 385, 636, 56))
+           self.ui.label_20.setText(f'<font color="white">no se han encontrado versiones para actualizar. <font>')
+           self.ui.pushButtonactualizar_confirmar.setEnabled(False)
 
 
 
@@ -3249,7 +3266,7 @@ class MyForm(QDialog):
        if self.posxy0[0] < 1264 and self.posxy0[0] > 1022 and self.posxy0[1] < 775 and self.posxy0[1] > 710:
 
          self.buzzer()
-         self.ui.inicia1.setStyleSheet("background-image: url(7 - Trabajando iniciar instancia.png);")
+         self.ui.inicia1.setStyleSheet("background-image: url(Boton Iniciar Instancia.png);")
          self.ui.pulssubetiempo.setStyleSheet("background-image: url(trasnp.png);\n"
                                               "border-image: url(Boton arriba inactivo.png);")
          self.ui.pulsbajatiempo.setStyleSheet("background-image: url(trasnp.png);\n"
