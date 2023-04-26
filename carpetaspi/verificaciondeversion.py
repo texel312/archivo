@@ -19,7 +19,7 @@ def cargarversionactual():
 
       repo = git.Repo.clone_from("https://github.com/texel312/archivo.git", "/home/texel/temporal")
       os.system("sudo chmod 777 -R /home/texel")
-      os.system("sudo cp /home/texel/temporal/versionnueva.db /home/texel/")
+      os.system("sudo cp /home/texel/temporal/carpetaspi/versionnueva.db /home/texel/")
       os.system("sudo chmod 777 -R /home/texel")
       shutil.rmtree("/home/texel/temporal")
       os.system("sudo chmod 777 -R /home/texel")
