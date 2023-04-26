@@ -36,16 +36,17 @@ class miwidget(QDialog):
     #self.show()
 
  def cartelactualizar(self):
-     self.buzzer()
+
      self.ui.label.setText("<span style=\" font-size:20pt; font-weight:600; color:green;\">Actualizando.. <span><span style=\" font-size:20pt; color:#f1f1f1;\">aguarde un instante por favor. Una vez finalizado el proceso, el sistema se reiniciará.<span> <span style=\" font-size:20pt; font-weight:600; color:red;\">NO APAGUE EL EQUIPO <span>")
-     #self.ui.pushButton.setEnabled(False)
+     self.ui.pushButton.setEnabled(False)
+     self.buzzer()
  def reiniciar(self):
      os.system("reboot")
 
  def buzzer(self):
 
      gpio.output(17, True)
-     sleep(0.1)
+     sleep(0.05)
      gpio.output(17, False)
 
 
