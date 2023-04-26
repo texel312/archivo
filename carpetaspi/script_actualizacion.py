@@ -38,7 +38,7 @@ class miwidget(QDialog):
  def cartelactualizar(self):
      self.buzzer()
      self.ui.label.setText("<span style=\" font-size:20pt; font-weight:600; color:green;\">Actualizando.. <span><span style=\" font-size:20pt; color:#f1f1f1;\">aguarde un instante por favor. Una vez finalizado el proceso, el sistema se reiniciará.<span> <span style=\" font-size:20pt; font-weight:600; color:red;\">NO APAGUE EL EQUIPO <span>")
-
+     self.ui.pushButton.setEnabled(False)
  def reiniciar(self):
      os.system("reboot")
 
