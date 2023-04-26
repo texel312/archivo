@@ -7,25 +7,20 @@ variableauxiliar=0
 
 def cargarversionactual():
   try:
-      # Clonar el repositorio de GitHub
-      repo = git.Repo.clone_from("https://github.com/texel312/archivo.git", "/home/texel/temporal")
-      # Copiar la carpeta del repositorio clonado en la Raspberry Pi a /home/mi_carpeta
+      # Clonar el repositorio de GitHub - opcion 1
+      #repo = git.Repo.clone_from("https://github.com/texel312/archivo.git", "/home/texel/temporal")
       #shutil.copytree("/home/texel/temporal/nuevaversion", "/home/texel/qdial2")
-
-      # Eliminar el repositorio clonado
       #shutil.rmtree("/home/texel/temporal")
       #os.system("sudo cp -R /home/texel/qdial2/* /home/texel/")
       #shutil.rmtree("/home/texel/qdial2")
       #os.system("sudo chmod -R 777 /home/texel")
 
-      # Ruta del archivo de origen
-      ruta_origen = '/home/texel/temporal/carpetaspi/versionnueva.db'
+      # opcion 2
 
-      # Ruta de destino
-      ruta_destino = '/home/texel/versionnueva.db'
-
-      # Copia el archivo
-      shutil.copy(ruta_origen, ruta_destino)
+      repo = git.Repo.clone_from("https://github.com/texel312/archivo.git", "/home/texel/temporal")
+      os.system("sudo chmod 777 -R /home/texel")
+      os.system("sudo cp /home/texel/temporal/versionnueva.db /home/texel/")
+      os.system("sudo chmod 777 -R /home/texel")
       shutil.rmtree("/home/texel/temporal")
       os.system("sudo chmod 777 -R /home/texel")
 
