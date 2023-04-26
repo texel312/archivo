@@ -860,10 +860,13 @@ class MyForm(QDialog):
        self.ui.pushButtonupdate.pressed.connect(lambda: self.instancia_pulsadores(self.ui.pushButtonupdate))
        self.ui.pushButtonvolver_update.clicked.connect(self.buzzer)
        self.ui.pushButtonvolver_update.clicked.connect(lambda: self.animarpulsadorestransicion(self.ui.pushButtonvolver_update,370, 475,362,467, 220, 56,5))
+
        self.ui.pushButtonlimpiar.clicked.connect(self.buzzer)
        self.ui.pushButtonlimpiar.pressed.connect(lambda: self.instancia_pulsadores(self.ui.pushButtonlimpiar))
        self.ui.pushButtonlimpiar.released.connect(self.pantallaborrarhistorial)
-       self.ui.pushButtonactualizar_confirmar.clicked.connect(self.actualizarsoft)
+       self.ui.pushButtonactualizar_confirmar.clicked.connect(self.buzzer)
+       self.ui.pushButtonactualizar_confirmar.clicked.connect(lambda: self.animarpulsadorestransicion(self.ui.pushButtonactualizar_confirmar,670, 475, 663,567, 220, 56, 6))
+       #self.ui.pushButtonactualizar_confirmar.released.connect(self.actualizarsoft)
        self.ui.pushButtonconfirmarpass.clicked.connect(self.buzzer)
        self.ui.pushButtonconfirmarpass.pressed.connect(self.confirmarpassnumerico)
        self.ui.pushButtonconfirmarpass.released.connect(self.cambiarfondopass)
@@ -6275,6 +6278,8 @@ class MyForm(QDialog):
            self.ui.stackedWidget.setCurrentIndex(15)
            self.numpagina = 15
            self.bloqueodepaginas(self.numpagina)
+       if pulsadorpresionado==6:
+           self.actualizarsoft()
 
 
    def animarlabel(self, etiqueta,inicio,fin):

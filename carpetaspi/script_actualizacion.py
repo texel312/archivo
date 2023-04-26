@@ -7,6 +7,9 @@ from gui_script_actualizar import *
 from time import sleep
 import os
 import sqlite3 as sql
+import RPi.GPIO as gpio
+import time
+
 
 
 
@@ -20,6 +23,9 @@ class miwidget(QDialog):
     self.setWindowFlags(Qt.FramelessWindowHint)
     self.setMouseTracking(True)
     self.setCursor(Qt.BlankCursor)
+    gpio.setwarnings(False)
+    gpio.setmode(gpio.BCM)
+    gpio.setup(17, gpio.OUT)
     self.ui.label.setText("<span style=\" font-size:20pt; color:#f1f1f1;\">pulse actualizar para comenzar el proceso.<span>")
     self.ui.pushButton.pressed.connect(self.cartelactualizar)
     self.ui.pushButton.released.connect(self.descargar_de_gihub)
@@ -30,10 +36,17 @@ class miwidget(QDialog):
     #self.show()
 
  def cartelactualizar(self):
+     self.buzzer()
      self.ui.label.setText("<span style=\" font-size:20pt; font-weight:600; color:green;\">Actualizando.. <span><span style=\" font-size:20pt; color:#f1f1f1;\">aguarde un instante por favor. Una vez finalizado el proceso, el sistema se reiniciará.<span> <span style=\" font-size:20pt; font-weight:600; color:red;\">NO APAGUE EL EQUIPO <span>")
 
  def reiniciar(self):
      os.system("reboot")
+
+ def buzzer(self):
+
+     gpio.output(17, True)
+     sleep(0.1)
+     gpio.output(17, False)
 
 
  def desactivarpulsador(self):
