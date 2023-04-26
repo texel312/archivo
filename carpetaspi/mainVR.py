@@ -865,7 +865,7 @@ class MyForm(QDialog):
        self.ui.pushButtonlimpiar.pressed.connect(lambda: self.instancia_pulsadores(self.ui.pushButtonlimpiar))
        self.ui.pushButtonlimpiar.released.connect(self.pantallaborrarhistorial)
        self.ui.pushButtonactualizar_confirmar.clicked.connect(self.buzzer)
-       self.ui.pushButtonactualizar_confirmar.clicked.connect(lambda: self.animarpulsadorestransicion(self.ui.pushButtonactualizar_confirmar,670, 475, 663,567, 220, 56, 6))
+       self.ui.pushButtonactualizar_confirmar.clicked.connect(lambda: self.animarpulsadorestransicion(self.ui.pushButtonactualizar_confirmar,670, 475, 663,467, 220, 56, 6))
        #self.ui.pushButtonactualizar_confirmar.released.connect(self.actualizarsoft)
        self.ui.pushButtonconfirmarpass.clicked.connect(self.buzzer)
        self.ui.pushButtonconfirmarpass.pressed.connect(self.confirmarpassnumerico)
